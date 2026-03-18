@@ -15,7 +15,7 @@ app:
     # Configure the catalog index page to be the root page, this is normally mounted on /catalog
     - page:catalog:
         config:
-          path: ../../catalog
+          path: /
 
 organization:
   name: Howden Digital Backbone
@@ -93,11 +93,9 @@ catalog:
   rules:
     - allow: [Component, System, API, Resource, Location]
   locations:
-    # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
       target: ../../catalog/apis/digital-backbone-api-entity.yaml
 
-    # Local example template
     - type: file
       target: ../../catalog/apis/digital-backbone-api.yaml
       rules:
@@ -125,4 +123,4 @@ kubernetes:
 # see https://backstage.io/docs/permissions/getting-started for more on the permission framework
 permission:
   # setting this to `false` will disable permissions
-  enabled: true
+  enabled: false
