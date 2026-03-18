@@ -96,11 +96,6 @@ catalog:
     - type: file
       target: ../../catalog/apis/digital-backbone-api-entity.yaml
 
-    - type: file
-      target: ../../catalog/apis/digital-backbone-api.yaml
-      rules:
-        - allow: [Template]
-
     # Local example organizational data
     - type: file
       target: ../../examples/org.yaml
