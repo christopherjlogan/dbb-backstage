@@ -1,8 +1,11 @@
 apiVersion: backstage.io/v1alpha1
-kind: Location
+kind: API
 metadata:
-  name: example-components
-  description: A collection of all Backstage example components
+  name: digital-backbone-adapter-api
+  description: APIs for the Howden Digital Backbone integration platform
 spec:
-  targets:
-#    - ./components/artist-lookup-component.yaml
+  type: openapi
+  lifecycle: production
+  owner: group:default/platform-team
+  definition:
+    $text: https://example.com/openapi.yaml
