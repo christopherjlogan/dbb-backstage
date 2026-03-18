@@ -8,5 +8,5 @@ spec:
   type: openapi
   lifecycle: production
   owner: user:guest
-  definition:
-    $file: ../../catalog/apis/digital-backbone-api-entity.yaml
+  definition: Catalog APIs 
+  #  $file: ../../catalog/apis/digital-backbone-api-entity.yaml
