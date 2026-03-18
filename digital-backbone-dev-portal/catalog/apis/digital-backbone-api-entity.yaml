@@ -9,4 +9,4 @@ spec:
   lifecycle: production
   owner: user:guest
   definition:
-    $file: ./digital-backbone-api.yaml
+    $file: ../../catalog/apis/digital-backbone-api-entity.yaml
