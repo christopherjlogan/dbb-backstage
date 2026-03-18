@@ -98,7 +98,7 @@ catalog:
 
     # Local example organizational data
     - type: file
-      target: ../../examples/org.yaml
+      target: ../../catalog/apis/org.yaml
       rules:
         - allow: [User, Group]
 
