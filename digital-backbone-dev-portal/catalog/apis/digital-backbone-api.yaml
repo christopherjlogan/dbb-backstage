@@ -1,196 +1,197 @@
-openapi: 3.0.3
-info:
-  title: Digital Backbone Adapter API
-  apiVersion: 1.0.0
-  description: |
-    APIs for publishing and consuming Digital Backbone domain events
-    and master data services.
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: digital-backbone-adapter-api
+  description: APIs for the Howden Digital Backbone integration platform
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:default/platform-team
+  definition: |
+    openapi: 3.0.3
+    info:
+      title: Digital Backbone Adapter API
+      version: 1.0.0
+      description: |
+        APIs for publishing Digital Backbone events and managing parties.
 
-    Request Standards:
-    - Content-Type: application/json
-    - Properties use camelCase
-    - All requests require x-correlation-id header
-    - Dates use ISO 8601
-    - All IDs are strings
+        Request standards:
+        - Content-Type: application/json
+        - Property names use camelCase
+        - Dates use ISO 8601 date-time format
+        - IDs are strings
+        - x-correlation-id header is required
+    servers:
+      - url: https://api.dbb.howdengrp.com
 
-servers:
-  - url: https://api.dbb.howdengrp.com
+    paths:
+      /events/opportunity-status-updated:
+        post:
+          summary: Opportunity Status Updated
+          parameters:
+            - name: x-correlation-id
+              in: header
+              required: true
+              schema:
+                type: string
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - opportunityId
+                    - status
+                    - updatedAt
+                  properties:
+                    opportunityId:
+                      type: string
+                    status:
+                      type: string
+                    updatedAt:
+                      type: string
+                      format: date-time
+          responses:
+            "200":
+              description: Message accepted
+            "404":
+              description: Message in the wrong format
 
-paths:
+      /events/trial-balance-created:
+        post:
+          summary: Trial Balance Created
+          parameters:
+            - name: x-correlation-id
+              in: header
+              required: true
+              schema:
+                type: string
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - balanceId
+                    - createdAt
+                  properties:
+                    balanceId:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+          responses:
+            "200":
+              description: Message accepted
+            "404":
+              description: Message in the wrong format
 
-  /events/opportunity-status-updated:
-    post:
-      summary: Opportunity Status Updated
-      description: Publishes an opportunity status update event.
-      parameters:
-        - name: x-correlation-id
-          in: header
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - opportunityId
-                - status
-                - updatedAt
-              properties:
-                opportunityId:
-                  type: string
-                status:
-                  type: string
-                updatedAt:
-                  type: string
-                  format: date-time
-      responses:
-        "200":
-          description: Message accepted
-        "404":
-          description: Message format invalid
+      /events/party-updated:
+        post:
+          summary: Party Updated
+          parameters:
+            - name: x-correlation-id
+              in: header
+              required: true
+              schema:
+                type: string
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - partyId
+                    - updatedAt
+                  properties:
+                    partyId:
+                      type: string
+                    updatedAt:
+                      type: string
+                      format: date-time
+          responses:
+            "200":
+              description: Message accepted
+            "404":
+              description: Message in the wrong format
 
-  /events/trial-balance-created:
-    post:
-      summary: Trial Balance Created
-      description: Publishes a trial balance creation event.
-      parameters:
-        - name: x-correlation-id
-          in: header
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - balanceId
-                - createdAt
-              properties:
-                balanceId:
-                  type: string
-                createdAt:
-                  type: string
-                  format: date-time
-      responses:
-        "200":
-          description: Message accepted
-        "404":
-          description: Message format invalid
+      /parties:
+        post:
+          summary: Create Party
+          parameters:
+            - name: x-correlation-id
+              in: header
+              required: true
+              schema:
+                type: string
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: string
+          responses:
+            "200":
+              description: Message accepted
+            "404":
+              description: Message in the wrong format
 
-  /events/party-updated:
-    post:
-      summary: Party Updated
-      description: Publishes a party update event.
-      parameters:
-        - name: x-correlation-id
-          in: header
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - partyId
-                - updatedAt
-              properties:
-                partyId:
-                  type: string
-                updatedAt:
-                  type: string
-                  format: date-time
-      responses:
-        "200":
-          description: Message accepted
-        "404":
-          description: Message format invalid
+      /parties/{partyId}:
+        get:
+          summary: Get Party
+          parameters:
+            - name: partyId
+              in: path
+              required: true
+              schema:
+                type: string
+            - name: x-correlation-id
+              in: header
+              required: true
+              schema:
+                type: string
+          responses:
+            "200":
+              description: Message accepted
+            "404":
+              description: Message in the wrong format
 
-  /parties:
-    post:
-      summary: Create Party
-      description: Creates a new party.
-      parameters:
-        - name: x-correlation-id
-          in: header
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-              properties:
-                name:
-                  type: string
-                type:
-                  type: string
-      responses:
-        "200":
-          description: Message accepted
-        "404":
-          description: Message format invalid
-
-  /parties/{partyId}:
-    patch:
-      summary: Update Party
-      description: Updates an existing party.
-      parameters:
-        - name: partyId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: x-correlation-id
-          in: header
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                type:
-                  type: string
-      responses:
-        "200":
-          description: Message accepted
-        "404":
-          description: Message format invalid
-
-    get:
-      summary: Get Party
-      description: Retrieves a party by ID.
-      parameters:
-        - name: partyId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: x-correlation-id
-          in: header
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Message accepted
-        "404":
-          description: Message format invalid
+        patch:
+          summary: Update Party
+          parameters:
+            - name: partyId
+              in: path
+              required: true
+              schema:
+                type: string
+            - name: x-correlation-id
+              in: header
+              required: true
+              schema:
+                type: string
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: string
+          responses:
+            "200":
+              description: Message accepted
+            "404":
+              description: Message in the wrong format

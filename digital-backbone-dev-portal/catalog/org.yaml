@@ -4,8 +4,32 @@ metadata:
   name: howden
   description: Howden organization
 spec:
-  type: organization
-  profile:
-    displayName: Howden
+  type: root
   children:
+    - platform-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform-team
+  description: Digital Backbone platform engineering team
+spec:
+  type: team
+  profile:
+    displayName: Digital Backbone Platform Team
+    email: platform-team@howdengrp.com
+  parent: howden
+  children: []
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: guest
+spec:
+  profile:
+    displayName: Guest User
+    email: guest@example.com
+  memberOf:
     - platform-team
