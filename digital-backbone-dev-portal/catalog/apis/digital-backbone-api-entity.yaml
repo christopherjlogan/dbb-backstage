@@ -7,6 +7,6 @@ metadata:
 spec:
   type: openapi
   lifecycle: production
-  owner: group:default/platform-team
+  owner: user:guest
   definition:
     $text: ./digital-backbone-api.yaml
