@@ -15,10 +15,10 @@ app:
     # Configure the catalog index page to be the root page, this is normally mounted on /catalog
     - page:catalog:
         config:
-          path: /
+          path: ../../catalog
 
 organization:
-  name: Howden Group Engineering
+  name: Howden Digital Backbone
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
