@@ -10,4 +10,4 @@ spec:
   lifecycle: production
   owner: user:guest
   definition:
-    $text: ./digital-backbone-api.yaml
+    $file: ./digital-backbone-api.yaml
